@@ -1,0 +1,1 @@
+python3 binary/scan.py tests/test.c
