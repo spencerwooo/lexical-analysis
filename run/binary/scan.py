@@ -1,6 +1,7 @@
 #! /usr/local/bin/python3
 
 import sys
+import string
 
 # 关键词
 cKeywords = ['auto', 'break', 'case', 'char', 'const',
@@ -12,13 +13,17 @@ cKeywords = ['auto', 'break', 'case', 'char', 'const',
              'unsigned', 'void', 'volatile', 'while']
 # 转义字符
 cEscSequence = ['\'', '"', '?', '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v']
+# 运算符和界限符
+cOperator = ['+', '-', '&', '*', '~', '!', '/',
+             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`', '\\', '@']
+cDelimiter = ['[', ']', '(', ')', '{', '}', '\'', '"', ',', ';']
 
 # 指针查找位置
 index = 0
 
 # Token 属性
 codeNum = 1
-wordType = ''
+codeType = ''
 codeLine = 1
 codeValue = ''
 codeValid = 0
@@ -26,6 +31,7 @@ codeValid = 0
 # 自动机状态
 charState = 0
 stringState = 0
+punctuationState = 0
 
 
 def preProcess(content):
@@ -48,8 +54,8 @@ def scanner(code):
   global codeLine
 
   # 识别到词语的类别
-  global wordType
-  wordType = ''
+  global codeType
+  codeType = ''
   # 识别到的词语
   global codeValue
   codeValue = ''
@@ -68,11 +74,12 @@ def scanner(code):
       codeValue = codeValue + character
       character = code[index]
       index = index + 1
-    wordType = 'identifier'
+    codeType = 'identifier'
+    index = index - 1
     # Keyword!
     for keyword in cKeywords:
       if codeValue == keyword:
-        wordType = 'keyword'
+        codeType = 'keyword'
         break
 
   # String! 识别到了字符串！
@@ -98,9 +105,12 @@ def scanner(code):
       index = index + 1
 
     if stringState == 2:
-      wordType = 'string'
+      codeType = 'string'
+      stringState = 0
     else:
       print('Illegal string.')
+      stringState = 0
+    # index = index - 1
 
   # Char! 识别到了字符！
   elif character == '\'':
@@ -123,18 +133,27 @@ def scanner(code):
           charState = 1
       character = code[index]
       index = index + 1
+    # index = index - 1
     if charState == 2:
-      wordType = 'character'
+      codeType = 'character'
       charState = 0
     else:
-      wordType = 'illegal char'
+      codeType = 'illegal char'
       charState = 0
 
-  # # Operators!
-  # elif character == '':
+  # Delimiters
+  elif character in cDelimiter:
+    codeValue = codeValue + character
+    codeType = 'delimiter'
+
+  # Operators
+  elif character in cOperator:
+    codeValue = codeValue + character
+    codeType = 'operator'
 
   # End of a line
   elif character == '\n':
+    codeType = 'new line'
     codeLine = codeLine + 1
 
 
@@ -152,12 +171,17 @@ def main():
   # Pre process C source file
   code = preProcess(content)
   print(code)
-  while index < len(code):
+
+  # Start scanning!
+  global codeNum
+  print(len(code))
+  while index <= len(code) - 1:
     scanner(code)
     # Print identified word type and word itself
-    if wordType != '':
-      # if wordType == 'character':
-      print('Line:', codeLine, wordType.upper() + ': ' + codeValue)
+    if codeType != '':
+      print('Num', codeNum, 'Line', codeLine,
+            codeType.upper() + ': ' + codeValue, index)
+      codeNum = codeNum + 1
 
 
 if __name__ == "__main__":
