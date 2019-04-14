@@ -1,7 +1,5 @@
-int main ( int _a , int b ) 
- { 
- float c ; 
- char d [ ] = "一个 \n 字符 \r a string a very normal \\ string" ; 
- char f = '*a' ; 
- return _a + b ; 
- } 
+int a = 12 ; 
+float b = 1.5 ; 
+int c = 013 ; 
+int c = 0x11 ; 
+int d = 1e5 ; 

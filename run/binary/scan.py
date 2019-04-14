@@ -13,9 +13,13 @@ cKeywords = ['auto', 'break', 'case', 'char', 'const',
              'unsigned', 'void', 'volatile', 'while']
 # 转义字符
 cEscSequence = ['\'', '"', '?', '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v']
-# 运算符和界限符
+# 运算符
 cOperator = ['+', '-', '&', '*', '~', '!', '/',
              '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`', '\\', '@']
+# 可作为二元运算符首字符的算符
+cBinaryOp = ['+', '-', '>', '<', '=', '!',
+             '&', '|', '*', '/', '%', '^', '#', ':']
+# 界限符
 cDelimiter = ['[', ']', '(', ')', '{', '}', '\'', '"', ',', ';']
 
 # 指针查找位置
@@ -31,7 +35,8 @@ codeValid = 0
 # 自动机状态
 charState = 0
 stringState = 0
-punctuationState = 0
+constantState = 0
+operatorState = 0
 
 
 def preProcess(content):
@@ -63,12 +68,12 @@ def scanner(code):
   character = code[index]
   index = index + 1
 
-  # Ignore white space 忽略空白字符
+  # Ignore white space
   while character == ' ':
     character = code[index]
     index = index + 1
 
-  # Identifier! 识别到了标识符！
+  # Identifier!
   if character.isalpha() or character == '_':
     while character.isalpha() or character.isdigit() or character == '_':
       codeValue = codeValue + character
@@ -82,7 +87,7 @@ def scanner(code):
         codeType = 'keyword'
         break
 
-  # String! 识别到了字符串！
+  # String!
   elif character == '"':
     global stringState
     while index < len(code):
@@ -110,9 +115,8 @@ def scanner(code):
     else:
       print('Illegal string.')
       stringState = 0
-    # index = index - 1
 
-  # Char! 识别到了字符！
+  # Char!
   elif character == '\'':
     global charState
     while index < len(code):
@@ -133,13 +137,69 @@ def scanner(code):
           charState = 1
       character = code[index]
       index = index + 1
-    # index = index - 1
     if charState == 2:
       codeType = 'character'
       charState = 0
     else:
       codeType = 'illegal char'
       charState = 0
+
+  # Integer and float constants
+  elif character.isdigit():
+    global constantState
+    while character.isdigit() or character in '-.xXeEaAbBcCdDfF':
+      codeValue = codeValue + character
+      if constantState == 0:
+        if character == '0':
+          constantState = 1
+        elif character in '123456789':
+          constantState = 2
+      elif constantState == 1:
+        if character in 'xX':
+          constantState = 3
+        elif character.isdigit():
+          constantState = 4
+        elif character == '.':
+          constantState = 5
+      elif constantState == 2:
+        if character.isdigit():
+          constantState = 2
+        elif character == '.':
+          constantState = 5
+      elif constantState == 3:
+        if character in 'aAbBcCdDeEfF' or character.isdigit():
+          constantState = 4
+      elif constantState == 4:
+        if character in 'aAbBcCdDeEfF' or character.isdigit():
+          constantState = 4
+      elif constantState == 5:
+        if character.isdigit():
+          constantState = 6
+      elif constantState == 6:
+        if character.isdigit():
+          constantState = 6
+        elif character in 'eE':
+          constantState = 7
+      elif constantState == 7:
+        if character.isdigit():
+          constantState = 6
+        elif character == '-':
+          constantState = 8
+      elif constantState == 8:
+        if character.isdigit():
+          constantState = 6
+      character = code[index]
+      index = index + 1
+    index = index - 1
+    if constantState == 1 or constantState == 2 or constantState == 4:
+      codeType = 'integer constant'
+      constantState = 0
+    elif constantState == 6:
+      codeType = 'floating constant'
+      constantState = 0
+    else:
+      codeType = 'illegal constant'
+      constantState = 0
 
   # Delimiters
   elif character in cDelimiter:
@@ -148,12 +208,108 @@ def scanner(code):
 
   # Operators
   elif character in cOperator:
-    codeValue = codeValue + character
-    codeType = 'operator'
+    global operatorState
+    while character in cOperator:
+      codeValue = codeValue + character
+      if operatorState == 0:
+        if not character in cBinaryOp:
+          operatorState = 1
+        else:
+          if character == '+':
+            operatorState = 2
+          elif character == '-':
+            operatorState = 3
+          elif character == '<':
+            operatorState = 4
+          elif character == '>':
+            operatorState = 5
+          elif character == '=':
+            operatorState = 6
+          elif character == '!':
+            operatorState = 7
+          elif character == '&':
+            operatorState = 8
+          elif character == '|':
+            operatorState = 9
+          elif character == '*':
+            operatorState = 10
+          elif character == '/':
+            operatorState = 11
+          elif character == '%':
+            operatorState = 12
+          elif character == '^':
+            operatorState = 13
+          elif character == '#':
+            operatorState = 14
+          elif character == ':':
+            operatorState = 15
+      elif operatorState == 1:
+        break
+      elif operatorState == 2:
+        if character in '+=':
+          operatorState = 1
+      elif operatorState == 3:
+        if character in '-=':
+          operatorState = 1
+      elif operatorState == 4:
+        if character in '=:%':
+          operatorState = 1
+        elif character == '<':
+          operatorState = 16
+      elif operatorState == 5:
+        if character in '=':
+          operatorState = 1
+        elif character == '>':
+          operatorState = 17
+      elif operatorState == 6:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 7:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 8:
+        if character in '&=':
+          operatorState = 1
+      elif operatorState == 9:
+        if character in '|=':
+          operatorState = 1
+      elif operatorState == 10:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 11:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 12:
+        if character in '=>:':
+          operatorState = 1
+      elif operatorState == 13:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 14:
+        if character == '#':
+          operatorState = 1
+      elif operatorState == 15:
+        if character == '>':
+          operatorState = 1
+      elif operatorState == 16:
+        if character == '=':
+          operatorState = 1
+      elif operatorState == 17:
+        if character == '=':
+          operatorState = 1
+
+      character = code[index]
+      index = index + 1
+    index = index - 1
+    if operatorState == 1 or operatorState == 16 or operatorState == 17:
+      codeType = 'operator'
+      operatorState = 0
+    else:
+      codeType = 'Illegal operator'
+      operatorState = 0
 
   # End of a line
   elif character == '\n':
-    codeType = 'new line'
     codeLine = codeLine + 1
 
 
@@ -179,8 +335,8 @@ def main():
     scanner(code)
     # Print identified word type and word itself
     if codeType != '':
-      print('Num', codeNum, 'Line', codeLine,
-            codeType.upper() + ': ' + codeValue, index)
+      print('Num', '{:>2}'.format(codeNum), 'Line', '{:>2}'.format(codeLine),
+            '{:>18}'.format(codeType.upper()) + ': ' + '{:<5}'.format(codeValue), index)
       codeNum = codeNum + 1
 
 

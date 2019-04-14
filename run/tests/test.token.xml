@@ -10,70 +10,70 @@
     </token>
     <token>
       <number>2</number>
-      <value>main</value>
+      <value>a</value>
       <type>GiG</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>3</number>
-      <value>(</value>
-      <type>separator</type>
+      <value>=</value>
+      <type>operator</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>4</number>
-      <value>int</value>
-      <type>keyword</type>
+      <value>12</value>
+      <type>GjG</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>5</number>
-      <value>_a</value>
-      <type>GiG</type>
+      <value>;</value>
+      <type>separator</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>6</number>
-      <value>,</value>
-      <type>separator</type>
-      <line>1</line>
+      <value>float</value>
+      <type>keyword</type>
+      <line>2</line>
       <valid>true</valid>
     </token>
     <token>
       <number>7</number>
-      <value>int</value>
-      <type>keyword</type>
-      <line>1</line>
+      <value>b</value>
+      <type>GiG</type>
+      <line>2</line>
       <valid>true</valid>
     </token>
     <token>
       <number>8</number>
-      <value>b</value>
-      <type>GiG</type>
-      <line>1</line>
+      <value>=</value>
+      <type>operator</type>
+      <line>2</line>
       <valid>true</valid>
     </token>
     <token>
       <number>9</number>
-      <value>)</value>
-      <type>separator</type>
-      <line>1</line>
+      <value>1.5</value>
+      <type>GjG</type>
+      <line>2</line>
       <valid>true</valid>
     </token>
     <token>
       <number>10</number>
-      <value>{</value>
+      <value>;</value>
       <type>separator</type>
       <line>2</line>
       <valid>true</valid>
     </token>
     <token>
       <number>11</number>
-      <value>float</value>
+      <value>int</value>
       <type>keyword</type>
       <line>3</line>
       <valid>true</valid>
@@ -87,36 +87,36 @@
     </token>
     <token>
       <number>13</number>
+      <value>=</value>
+      <type>operator</type>
+      <line>3</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>14</number>
+      <value>013</value>
+      <type>GjG</type>
+      <line>3</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>15</number>
       <value>;</value>
       <type>separator</type>
       <line>3</line>
       <valid>true</valid>
     </token>
     <token>
-      <number>14</number>
-      <value>char</value>
+      <number>16</number>
+      <value>int</value>
       <type>keyword</type>
       <line>4</line>
       <valid>true</valid>
     </token>
     <token>
-      <number>15</number>
-      <value>d</value>
-      <type>GiG</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>16</number>
-      <value>[</value>
-      <type>separator</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
       <number>17</number>
-      <value>]</value>
-      <type>separator</type>
+      <value>c</value>
+      <type>GiG</type>
       <line>4</line>
       <valid>true</valid>
     </token>
@@ -129,8 +129,8 @@
     </token>
     <token>
       <number>19</number>
-      <value>"一个 \n 字符 \r a string a very normal \\ string"</value>
-      <type>GkG</type>
+      <value>0x11</value>
+      <type>GjG</type>
       <line>4</line>
       <valid>true</valid>
     </token>
@@ -143,14 +143,14 @@
     </token>
     <token>
       <number>21</number>
-      <value>char</value>
+      <value>int</value>
       <type>keyword</type>
       <line>5</line>
       <valid>true</valid>
     </token>
     <token>
       <number>22</number>
-      <value>f</value>
+      <value>d</value>
       <type>GiG</type>
       <line>5</line>
       <valid>true</valid>
@@ -164,7 +164,7 @@
     </token>
     <token>
       <number>24</number>
-      <value>'*a'</value>
+      <value>1e5</value>
       <type>GjG</type>
       <line>5</line>
       <valid>true</valid>
@@ -178,51 +178,9 @@
     </token>
     <token>
       <number>26</number>
-      <value>return</value>
-      <type>keyword</type>
-      <line>6</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>27</number>
-      <value>_a</value>
-      <type>GiG</type>
-      <line>6</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>28</number>
-      <value>+</value>
-      <type>operator</type>
-      <line>6</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>29</number>
-      <value>b</value>
-      <type>GiG</type>
-      <line>6</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>30</number>
-      <value>;</value>
-      <type>separator</type>
-      <line>6</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>31</number>
-      <value>}</value>
-      <type>separator</type>
-      <line>7</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>32</number>
       <value>#</value>
       <type>#</type>
-      <line>8</line>
+      <line>6</line>
       <valid>true</valid>
     </token>
   </tokens>
