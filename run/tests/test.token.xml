@@ -31,7 +31,7 @@
     </token>
     <token>
       <number>5</number>
-      <value>a</value>
+      <value>_a</value>
       <type>GiG</type>
       <line>1</line>
       <valid>true</valid>
@@ -73,51 +73,156 @@
     </token>
     <token>
       <number>11</number>
-      <value>return</value>
+      <value>float</value>
       <type>keyword</type>
       <line>3</line>
       <valid>true</valid>
     </token>
     <token>
       <number>12</number>
-      <value>a</value>
+      <value>c</value>
       <type>GiG</type>
       <line>3</line>
       <valid>true</valid>
     </token>
     <token>
       <number>13</number>
-      <value>+</value>
-      <type>operator</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>14</number>
-      <value>b</value>
-      <type>GiG</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>15</number>
       <value>;</value>
       <type>separator</type>
       <line>3</line>
       <valid>true</valid>
     </token>
     <token>
+      <number>14</number>
+      <value>char</value>
+      <type>keyword</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>15</number>
+      <value>d</value>
+      <type>GiG</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
       <number>16</number>
-      <value>}</value>
+      <value>[</value>
       <type>separator</type>
       <line>4</line>
       <valid>true</valid>
     </token>
     <token>
       <number>17</number>
+      <value>]</value>
+      <type>separator</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>18</number>
+      <value>=</value>
+      <type>operator</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>19</number>
+      <value>"一个 \n 字符 \r a string a very normal \\ string"</value>
+      <type>GkG</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>20</number>
+      <value>;</value>
+      <type>separator</type>
+      <line>4</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>21</number>
+      <value>char</value>
+      <type>keyword</type>
+      <line>5</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>22</number>
+      <value>f</value>
+      <type>GiG</type>
+      <line>5</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>23</number>
+      <value>=</value>
+      <type>operator</type>
+      <line>5</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>24</number>
+      <value>'*a'</value>
+      <type>GjG</type>
+      <line>5</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>25</number>
+      <value>;</value>
+      <type>separator</type>
+      <line>5</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>26</number>
+      <value>return</value>
+      <type>keyword</type>
+      <line>6</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>27</number>
+      <value>_a</value>
+      <type>GiG</type>
+      <line>6</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>28</number>
+      <value>+</value>
+      <type>operator</type>
+      <line>6</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>29</number>
+      <value>b</value>
+      <type>GiG</type>
+      <line>6</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>30</number>
+      <value>;</value>
+      <type>separator</type>
+      <line>6</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>31</number>
+      <value>}</value>
+      <type>separator</type>
+      <line>7</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>32</number>
       <value>#</value>
       <type>#</type>
-      <line>5</line>
+      <line>8</line>
       <valid>true</valid>
     </token>
   </tokens>
