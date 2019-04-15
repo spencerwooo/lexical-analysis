@@ -157,7 +157,7 @@ def scanner(code):
       elif constantState == 1:
         if character in 'xX':
           constantState = 3
-        elif character.isdigit():
+        elif character in '01234567':
           constantState = 4
         elif character == '.':
           constantState = 5
@@ -165,6 +165,8 @@ def scanner(code):
           constantState = 9
         elif character in 'uU':
           constantState = 11
+        else:
+          constantState = -1
       elif constantState == 2:
         if character.isdigit():
           constantState = 2
@@ -176,9 +178,9 @@ def scanner(code):
           constantState = 11
       elif constantState == 3:
         if character in 'aAbBcCdDeEfF' or character.isdigit():
-          constantState = 4
+          constantState = 14
       elif constantState == 4:
-        if character in 'aAbBcCdDeEfF' or character.isdigit():
+        if character in '01234567':
           constantState = 4
         elif character in 'lL':
           constantState = 9
@@ -222,6 +224,15 @@ def scanner(code):
       elif constantState == 12:
         if character in 'lL':
           constantState = 13
+        else:
+          constantState = -1
+      elif constantState == 14:
+        if character.isdigit() or character in 'aAbBcCdDeEfF':
+          constantState = 14
+        elif character in 'lL':
+          constantState = 9
+        elif character in 'uU':
+          constantState = 11
         else:
           constantState = -1
 
