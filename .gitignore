@@ -1,2 +1,5 @@
 .vscode/
 .DS_Store
+docs/__latexindent_temp.tex
+docs/docs.synctex.gz
+docs/_minted-docs/*

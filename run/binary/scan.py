@@ -15,7 +15,7 @@ cKeywords = ['auto', 'break', 'case', 'char', 'const',
 cEscSequence = ['\'', '"', '?', '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v']
 # 运算符
 cOperator = ['+', '-', '&', '*', '~', '!', '/',
-             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`', '@']
+             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`']
 # 可作为二元运算符首字符的算符
 cBinaryOp = ['+', '-', '>', '<', '=', '!',
              '&', '|', '*', '/', '%', '^', '#', ':', '.']
@@ -47,6 +47,7 @@ def preProcess(content):
       code = code + line.lstrip()
     else:
       code = code + line
+  code = code + '@'
   return code
 
 
@@ -437,6 +438,9 @@ def scanner(code):
   # End of a line
   elif character == '\n':
     codeLine = codeLine + 1
+  # End of file
+  elif character == '@':
+    codeType = 'END OF FILE'
 
 
 def main():
@@ -456,7 +460,6 @@ def main():
 
   # Start scanning!
   global codeNum
-  print(len(code))
   while index <= len(code) - 1:
     scanner(code)
     # Print identified word type and word itself
