@@ -196,6 +196,10 @@ def scanner(code):
           constantState = 6
         elif character in 'eE':
           constantState = 7
+        elif character in 'fFlL':
+          constantState = 15
+        else:
+          constantState = -1
       elif constantState == 7:
         if character.isdigit():
           constantState = 6
@@ -235,6 +239,9 @@ def scanner(code):
           constantState = 11
         else:
           constantState = -1
+      elif constantState == 13 or constantState == 15:
+        if character:
+          constantState = -1
 
       character = code[index]
       index = index + 1
@@ -242,7 +249,7 @@ def scanner(code):
     if constantState in (1, 2, 4, 9, 10, 11, 12, 13):
       codeType = 'integer constant'
       constantState = 0
-    elif constantState == 6:
+    elif constantState == 6 or constantState == 15:
       codeType = 'floating constant'
       constantState = 0
     else:
