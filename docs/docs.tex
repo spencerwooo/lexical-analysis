@@ -197,7 +197,14 @@ while index <= len(code) - 1:
   digit \rightarrow 0 ... 9
 \end{equation}
 
-为了识别标识符，我确定如下的状态机：
+为了识别标识符，我确定如图 2 的状态机。
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{images/identifier.png}
+  \caption{识别标识符的状态机}
+  \label{fig:2}
+\end{figure}
 
 之后，我们就可以实现对标识符的识别：
 
@@ -214,8 +221,9 @@ if character.isalpha() or character == '_':
 
 在识别了标识符之后，我们可以直接继续判断这个标识符是不是 C 语言中的关键词（Keyword）之一。我们本次实验需要判断的是 C 语言的子集，需要进行识别的关键词有这些：
 
-\captionof{table}{C 语言关键词表}
 \begin{center}
+  \captionsetup{position=above}
+  \captionof{table}{C 语言关键词表}
   \begin{tabular}{c|c|c|c|c}
     \hline
     auto & break & case & char & const \\
@@ -239,7 +247,60 @@ for keyword in cKeywords:
     break
 \end{minted}
 
+这样我们就可以成功的识别 Token 中的标识符和关键词。
+
 \subsubsection{常量（整形常量 Integer Constant 和浮点型常量 Floating Constant）的判断}
+在 C 语言的语法中，常量 Constant 有整形和浮点型两种需要进行识别。整形常量 Integer Constant 的文法可以这样描述：
+
+\begin{equation}
+  \begin{split}
+    integer-constant \rightarrow \ decimal-constant \ integer-suffix\\|\ octal-constant \ integer-suffix\\|\ hexadecimal-constant \ integer-suffix
+  \end{split}
+\end{equation}
+\begin{equation}
+  decimal-constant \rightarrow 1...9\ |\ decimal-constant\ digit
+\end{equation}
+\begin{equation}
+  octal-constant \rightarrow 0\ |\ octal-constant\ octal-digit
+\end{equation}
+\begin{equation}
+  \begin{split}
+    hexadecimal-constant \rightarrow hexadecimal-prefix\ hexadecimal-digit\\|\ hexadecimal-constant\ hexadecimal-digit
+  \end{split}
+\end{equation}
+\begin{equation}
+  hexadecimal-prefix \rightarrow 0x\ |\ 0X
+\end{equation}
+\begin{equation}
+  \begin{split}
+    integer-suffix \rightarrow\ unsigned\ long\ |\ unsigned\ long-long\\|\ long\ unsigned\ |\ long-long\ unsigned
+  \end{split}
+\end{equation}
+
+浮点型常量 Floating Constant 的文法可以这样描述：
+
+\begin{equation}
+  floating-constant \rightarrow\ decimal-floating-constant\ |\ hexadecimal-floating-constant
+\end{equation}
+\begin{equation}
+\begin{split}
+    decimal-floating-constant \rightarrow\ fractional-constant\ exp\ floating-suffix\ \\ |\ digital-seq\ exp\ floating-suffix
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+    hexadecimal-floating-constant \rightarrow\ hexadecimal-prefix\ \\hexadecimal-frac-constant\ binary-exp\ floating-suffix\ \\|\ hexadecimal-prefix\ hexadecimal-digit-seq\\\ binary-exp\ floating-suffix
+\end{split}
+\end{equation}
+\begin{equation}
+  exp \rightarrow\ e digit-seq\ |\ E\ digit-seq
+\end{equation}
+\begin{equation}
+  sign \rightarrow\ +\ |-
+\end{equation}
+\begin{equation}
+  digit-seq \rightarrow\ digit\ |\ digit-seq\ digit
+\end{equation}
 
 \subsubsection{字符 Character、字符串 String 的判断}
 
