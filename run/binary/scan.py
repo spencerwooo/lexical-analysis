@@ -15,12 +15,12 @@ cKeywords = ['auto', 'break', 'case', 'char', 'const',
 cEscSequence = ['\'', '"', '?', '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v']
 # 运算符
 cOperator = ['+', '-', '&', '*', '~', '!', '/',
-             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`', '\\', '@']
+             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`', '@']
 # 可作为二元运算符首字符的算符
 cBinaryOp = ['+', '-', '>', '<', '=', '!',
-             '&', '|', '*', '/', '%', '^', '#', ':']
+             '&', '|', '*', '/', '%', '^', '#', ':', '.']
 # 界限符
-cDelimiter = ['[', ']', '(', ')', '{', '}', '\'', '"', ',', ';']
+cDelimiter = ['[', ']', '(', ')', '{', '}', '\'', '"', ',', ';', '\\']
 
 # 指针查找位置
 index = 0
@@ -213,7 +213,8 @@ def scanner(code):
       codeValue = codeValue + character
       if operatorState == 0:
         if not character in cBinaryOp:
-          operatorState = 1
+          operatorState = 20
+          break
         else:
           if character == '+':
             operatorState = 2
@@ -243,68 +244,138 @@ def scanner(code):
             operatorState = 14
           elif character == ':':
             operatorState = 15
+          elif character == '.':
+            operatorState = 18
+
       elif operatorState == 1:
         break
       elif operatorState == 2:
         if character in '+=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 3:
         if character in '-=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 4:
         if character in '=:%':
           operatorState = 1
+          break
         elif character == '<':
           operatorState = 16
+        else:
+          operatorState = -1
       elif operatorState == 5:
         if character in '=':
           operatorState = 1
+          break
         elif character == '>':
           operatorState = 17
+        else:
+          operatorState = -1
       elif operatorState == 6:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 7:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 8:
         if character in '&=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 9:
         if character in '|=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 10:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 11:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 12:
         if character in '=>:':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 13:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 14:
         if character == '#':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 15:
         if character == '>':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 16:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
       elif operatorState == 17:
         if character == '=':
           operatorState = 1
+          break
+        else:
+          operatorState = -1
+      elif operatorState == 18:
+        if character == '.':
+          operatorState = 19
+        else:
+          operatorState = -1
+      elif operatorState == 19:
+        if character == '.':
+          operatorState = 1
+          break
+        else:
+          operatorState = -1
 
       character = code[index]
       index = index + 1
-    index = index - 1
-    if operatorState == 1 or operatorState == 16 or operatorState == 17:
-      codeType = 'operator'
+
+    if operatorState >= 2 and operatorState <= 18:
+      index = index - 1
+      codeType = 'Unary operator'
+      operatorState = 0
+    elif operatorState == 20:
+      codeType = 'Unary operator'
+      operatorState = 0
+    elif operatorState == 1:
+      codeType = 'Multicast operator'
       operatorState = 0
     else:
+      index = index - 1
       codeType = 'Illegal operator'
       operatorState = 0
 
