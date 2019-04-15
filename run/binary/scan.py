@@ -147,7 +147,7 @@ def scanner(code):
   # Integer and float constants
   elif character.isdigit():
     global constantState
-    while character.isdigit() or character in '-.xXeEaAbBcCdDfF':
+    while character.isdigit() or character in '-.xXeEaAbBcCdDfFuUlL':
       codeValue = codeValue + character
       if constantState == 0:
         if character == '0':
@@ -161,17 +161,31 @@ def scanner(code):
           constantState = 4
         elif character == '.':
           constantState = 5
+        elif character in 'lL':
+          constantState = 9
+        elif character in 'uU':
+          constantState = 11
       elif constantState == 2:
         if character.isdigit():
           constantState = 2
         elif character == '.':
           constantState = 5
+        elif character in 'lL':
+          constantState = 9
+        elif character in 'uU':
+          constantState = 11
       elif constantState == 3:
         if character in 'aAbBcCdDeEfF' or character.isdigit():
           constantState = 4
       elif constantState == 4:
         if character in 'aAbBcCdDeEfF' or character.isdigit():
           constantState = 4
+        elif character in 'lL':
+          constantState = 9
+        elif character in 'uU':
+          constantState = 11
+        else:
+          constantState = -1
       elif constantState == 5:
         if character.isdigit():
           constantState = 6
@@ -188,10 +202,33 @@ def scanner(code):
       elif constantState == 8:
         if character.isdigit():
           constantState = 6
+      elif constantState == 9:
+        if character in 'lL':
+          constantState = 10
+        elif character in 'uU':
+          constantState = 12
+        else:
+          constantState = -1
+      elif constantState == 10:
+        if character in 'uU':
+          constantState = 13
+        else:
+          constantState = -1
+      elif constantState == 11:
+        if character in 'lL':
+          constantState = 12
+        else:
+          constantState = -1
+      elif constantState == 12:
+        if character in 'lL':
+          constantState = 13
+        else:
+          constantState = -1
+
       character = code[index]
       index = index + 1
     index = index - 1
-    if constantState == 1 or constantState == 2 or constantState == 4:
+    if constantState in (1, 2, 4, 9, 10, 11, 12, 13):
       codeType = 'integer constant'
       constantState = 0
     elif constantState == 6:

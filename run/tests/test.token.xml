@@ -3,184 +3,51 @@
   <tokens>
     <token>
       <number>1</number>
-      <value>int</value>
-      <type>keyword</type>
-      <line>1</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>2</number>
       <value>a</value>
       <type>GiG</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
+      <number>2</number>
+      <value>++</value>
+      <type>operator</type>
+      <line>1</line>
+      <valid>true</valid>
+    </token>
+    <token>
       <number>3</number>
-      <value>=</value>
+      <value>++</value>
       <type>operator</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>4</number>
-      <value>12</value>
-      <type>GjG</type>
+      <value>+</value>
+      <type>operator</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
       <number>5</number>
+      <value>a</value>
+      <type>GiG</type>
+      <line>1</line>
+      <valid>true</valid>
+    </token>
+    <token>
+      <number>6</number>
       <value>;</value>
       <type>separator</type>
       <line>1</line>
       <valid>true</valid>
     </token>
     <token>
-      <number>6</number>
-      <value>float</value>
-      <type>keyword</type>
-      <line>2</line>
-      <valid>true</valid>
-    </token>
-    <token>
       <number>7</number>
-      <value>b</value>
-      <type>GiG</type>
-      <line>2</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>8</number>
-      <value>=</value>
-      <type>operator</type>
-      <line>2</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>9</number>
-      <value>1.5</value>
-      <type>GjG</type>
-      <line>2</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>10</number>
-      <value>;</value>
-      <type>separator</type>
-      <line>2</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>11</number>
-      <value>int</value>
-      <type>keyword</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>12</number>
-      <value>c</value>
-      <type>GiG</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>13</number>
-      <value>=</value>
-      <type>operator</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>14</number>
-      <value>013</value>
-      <type>GjG</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>15</number>
-      <value>;</value>
-      <type>separator</type>
-      <line>3</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>16</number>
-      <value>int</value>
-      <type>keyword</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>17</number>
-      <value>c</value>
-      <type>GiG</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>18</number>
-      <value>=</value>
-      <type>operator</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>19</number>
-      <value>0x11</value>
-      <type>GjG</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>20</number>
-      <value>;</value>
-      <type>separator</type>
-      <line>4</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>21</number>
-      <value>int</value>
-      <type>keyword</type>
-      <line>5</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>22</number>
-      <value>d</value>
-      <type>GiG</type>
-      <line>5</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>23</number>
-      <value>=</value>
-      <type>operator</type>
-      <line>5</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>24</number>
-      <value>1e5</value>
-      <type>GjG</type>
-      <line>5</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>25</number>
-      <value>;</value>
-      <type>separator</type>
-      <line>5</line>
-      <valid>true</valid>
-    </token>
-    <token>
-      <number>26</number>
       <value>#</value>
       <type>#</type>
-      <line>6</line>
+      <line>2</line>
       <valid>true</valid>
     </token>
   </tokens>
