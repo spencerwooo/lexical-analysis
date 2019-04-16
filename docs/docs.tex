@@ -293,20 +293,81 @@ for keyword in cKeywords:
 \end{split}
 \end{equation}
 \begin{equation}
-  exp \rightarrow\ e digit-seq\ |\ E\ digit-seq
+  exp \rightarrow\ e\ digit-seq\ |\ E\ digit-seq
 \end{equation}
 \begin{equation}
-  sign \rightarrow\ +\ |-
+  sign \rightarrow\ +\ |\ -
 \end{equation}
 \begin{equation}
   digit-seq \rightarrow\ digit\ |\ digit-seq\ digit
 \end{equation}
+\begin{equation}
+\begin{split}
+  hexadecimal-frac-constant \rightarrow\ hexadecimal-digit-seq\ .\ \\hexadecimal-digit-seq\ |\ hexadecimal-digit-seq\ .
+\end{split}
+\end{equation}
+\begin{equation}
+  binary-exp \rightarrow\ p\ digit-seq\ |\ P\ digit-seq
+\end{equation}
+\begin{equation}
+\begin{split}
+    hexadecimal-digit-seq \rightarrow\ hexadecimal-digit-seq\ |\\\ hexadecimal-digit-seq\ hexadecimal-digit
+\end{split}
+\end{equation}
+\begin{equation}
+  floating-suffix \rightarrow\ f\ |\ F\ |\ l\ |\ L
+\end{equation}
+
+其中我们需要特别注意的是：
+\begin{itemize}
+  \item 整数常量中有十进制 Decimal、八进制 Octal 和十六进制 Hexadecimal 三种常量需要考虑，其中以 0 开头的是八进制数字，以 0x 或 0X 开头的是十六进制数字，其他我们都直接认为是十进制数字
+  \item 浮点型常量中需要考虑科学计数法，比如 1.5e-4 就是一个合法的浮点型常量
+  \item 整数常量中的后缀字符有 u、U 表示无符号整形 unsigned 和 l、L 表示长整型 long 或 long long，也就是说比如 512ull 这样的无符号长整型就是合法的十进制整型常量
+  \item 浮点型常量中后缀字符有 f、F、l、L，其中 f、F 表示 float 类型的浮点型常量，没有 f、F 后缀的浮点型常量我们认为是 double 类型的；l、L 表示长浮点型常量，即比如 1.5F、4.9L 这样的浮点数是合法的
+\end{itemize}
+
+综合整形常量和浮点型常量的文法表示和注意，我们可以构造如下的自动机来识别整形和浮点型常量。
 
 \subsubsection{字符 Character、字符串 String 的判断}
+字符和字符串我们需要分别进行判断。我在这一步骤的判断是基于界限符单引号\ ' 和双引号\ " 来判断 Token 属于字符还是字符串。
+
+我们首先利用文法描述字符常量：
+\begin{equation}
+  char-constant \rightarrow\ 'c-char-seq'
+\end{equation}
+\begin{equation}
+  c-char-seq \rightarrow\ c-char\ |\ c-char-seq\ c-char
+\end{equation}
+\begin{equation}
+  c-char \rightarrow\ all\ symbols\ other\ than\ ', \ \setminus\ and\ \setminus n\ |\ esc-seq
+\end{equation}
+\begin{equation}
+  esc-seq \rightarrow\ \setminus'\ |\ \setminus"\ |\ \setminus?\ |\ \setminus\setminus\ |\ \setminus a\ |\ \setminus b\ |\ \setminus f\ |\ \setminus n\ |\ \setminus r\ |\ \setminus t\ |\ \setminus v
+\end{equation}
+
+字符串常量同样可以用文法表示如下：
+\begin{equation}
+  string-literal \rightarrow\ "s-char-seq"
+\end{equation}
+\begin{equation}
+  s-char-seq \rightarrow\ s-char\ |\ s-char-seq\ s-char
+\end{equation}
+\begin{equation}
+  s-char \rightarrow\ all\ symbols\ other\ than\ ', \ \setminus\ and\ \setminus n\ |\ esc-seq
+\end{equation}
+\begin{equation}
+  esc-seq \rightarrow\ \setminus'\ |\ \setminus"\ |\ \setminus?\ |\ \setminus\setminus\ |\ \setminus a\ |\ \setminus b\ |\ \setminus f\ |\ \setminus n\ |\ \setminus r\ |\ \setminus t\ |\ \setminus v
+\end{equation}
 
 \subsubsection{算符（包括运算符 Operator 和界限符 Delimiter）的判断}
+在 C 语言中，能够被识别的算符有：
 
 \section{实验结果}
 
 \section{实验心得体会}
+通过本次实验，我重新认识了 C 语言编写的程序在编译过程中词法分析的具体方法。我不仅更加了解了标识符、常量、字符和算符的具体文法描述，还实际的利用了自动机对这些 Token 进行匹配，大致实现了一个简单的词法识别器，能够对一段 C 语言代码进行分析，得到每个识别 Token 的位置、属性和是否合法等性质。
+
+在本次实验的词法分析中，虽然每种 Token 的文法描述都非常复杂，但是我发现，只要认真仔细的写好自动机的具体识别过程，利用 Python 来实现这个自动机还是相对简单。
+
+同时，我也在本次实验中领略到各种不常用的 C 语言合法的语法，比如 \texttt{0777}、\texttt{0xAFull} 等八进制、十六进制整数，比如 \texttt{1.5e-4}、\texttt{0.5F} 等各种形式的浮点数，比如 \texttt{<\%}、\texttt{|=}、\texttt{...} 等不常见的算符。这让我重新了解了 C 语言的语法表示，也让我对自动机理论有了新的认识。
 \end{document}
