@@ -497,8 +497,8 @@ def main():
         xmlValid.text = 'false'
 
       ## Test output, debugging purposes
-      # print('Num', '{:>2}'.format(codeNum), 'Line', '{:>2}'.format(codeLine),
-      #       '{:>18}'.format(codeType.upper()) + ': ' + '{:<5}'.format(codeValue), index)
+      print('Num', '{:>2}'.format(codeNum), 'Line', '{:>2}'.format(codeLine),
+            '{:>18}'.format(codeType.upper()) + ': ' + '{:<5}'.format(codeValue), index)
 
       codeNum = codeNum + 1
 

@@ -592,7 +592,128 @@ elif character in cOperator:
 
 我们到这里基本实现了所有 Token 类型的识别。
 
+\subsubsection{输出 XML 格式的 Token 识别结果至文件}
+最后，我们需要将识别成功的 Token 添加至 XML 树中，并将其输出到指定文件内。为了实现 XML 树的构建，我使用了 \texttt{ElementTree} 的 Python 内置 XML 操作库进行处理，建立根节点 \texttt{project}、Token 节点 \texttt{tokens} 和每个 Token 的属性节点。属性节点大致构建如下：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{xml}
+<token>
+  <numbers>1</numbers>
+  <value>int</value>
+  <keyword>keyword</keyword>
+  <line>1</line>
+  <true>true</true>
+</token>
+\end{minted}
+
+为了将项目名作为根节点 \texttt{project} 的 \texttt{name} 属性，以及确立 XML 输出文件名称，我们首先处理输入文件的名称：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# C source file name
+fileName = os.path.basename(filePath)
+# XML output file name
+xmlFileName = os.path.splitext(fileName)[0] + '.token.xml'
+\end{minted}
+
+之后，我们创建 XML 树：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# Create XML tree
+xmlTree = ElementTree.Element('project', {
+    'name': fileName
+})
+xmlTokens = ElementTree.SubElement(xmlTree, 'tokens')
+\end{minted}
+
+接下来，我们将每次识别的 Token 属性依次赋给每棵子树的节点：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+while index <= len(code) - 1:
+  ...
+  if codeType != '':
+    xmlToken = ElementTree.SubElement(xmlTokens, 'token')
+
+    xmlNumber = ElementTree.SubElement(xmlToken, 'numbers')
+    xmlValue = ElementTree.SubElement(xmlToken, 'value')
+    xmlType = ElementTree.SubElement(xmlToken, 'keyword')
+    xmlLine = ElementTree.SubElement(xmlToken, 'line')
+    xmlValid = ElementTree.SubElement(xmlToken, 'true')
+
+    xmlNumber.text = str(codeNum)
+    xmlValue.text = str(codeValue)
+    xmlType.text = codeType.lower()
+    xmlLine.text = str(codeLine)
+    if not 'illegal' in codeType.lower():
+      xmlValid.text = 'true'
+    else:
+      xmlValid.text = 'false'
+    ...
+    codeNum = codeNum + 1
+\end{minted}
+
+这样，我们就成功的将 Token 的识别结果输出至树 \texttt{xmlTree}，构建了 XML 树。最后，我们将 XML 树的内容格式化（Prettify）并赋予 \texttt{utf-8} 的文件编码格式，就可以输出至文件了。
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# Turn XML tree to string
+xmlString = ElementTree.tostring(xmlTree)
+# Set XML indent and encoding (This returns a byte for the file to read)
+xml = minidom.parseString(xmlString).toprettyxml(indent='  ', encoding='utf-8')
+# Write XML to file
+with open(xmlFileName, 'wb') as f:
+  f.write(xml)
+print('Written XML token processing results to file:', xmlFileName)
+\end{minted}
+
 \section{实验结果}
+
+\subsection{Token 的识别结果}
+我们在 Token 识别的过程中，将识别到的 Token 属性依次输出，以下面这段 C 语言代码段为例子：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{c}
+int main(int a, int b)
+{
+  a = a & b;
+  return a + b;
+}
+\end{minted}
+
+我们可以得到如下图 \ref{fig:subfig1} 的输出结果：
+
+\begin{figure}[h]
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\linewidth]{images/output.png}
+    \caption{识别过程输出的 Token 属性}
+    \label{fig:subfig1}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\linewidth]{images/output2.png}
+    \caption{对于不常用 Token 的识别处理}
+    \label{fig:subfig2}
+  \end{subfigure}
+  \caption{词法分析器对 Token 的识别结果}
+  \label{fig:figure5}
+\end{figure}
+
+为了更加准确的测试我本次实验实现的词法分析器，我准备了一个如下的 C 语言代码段：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{c}
+int a = 0xA1Eull;
+float b = 1.5e-4F;
+char *s = "一个很长的字符串";
+a += 2;
+\end{minted}
+
+我使用我本次实现的词法分析器进行识别，得到了如上图 \ref{fig:subfig2} 的识别结果，可以看到对于复杂的输入串，我们的词法分析器也是准确的。
+
+\subsection{XML 文件的输出结果}
+
+接下来，我们将识别号的 Token 各个属性进行 XML 格式化，并输出至文件中。我成功生成了 XML 文件，并将之和 \texttt{BIT-MiniCC} 词法分析步骤的 XML 文件进行比对，得到了如下图 \ref{fig:figure7} 的 XML 识别结果。
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{images/XML.png}
+  \caption{XML 文件的输出结果和 BIT-MiniCC 输出 XML 对比}
+  \label{fig:figure7}
+\end{figure}
 
 \section{实验心得体会}
 通过本次实验，我重新认识了 C 语言编写的程序在编译过程中词法分析的具体方法。我不仅更加了解了标识符、常量、字符和算符的具体文法描述，还实际的利用了自动机对这些 Token 进行匹配，大致实现了一个简单的词法识别器，能够对一段 C 语言代码进行分析，得到每个识别 Token 的位置、属性和是否合法等性质。

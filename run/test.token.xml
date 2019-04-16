@@ -10,132 +10,139 @@
     </token>
     <token>
       <numbers>2</numbers>
-      <value>main</value>
+      <value>a</value>
       <keyword>identifier</keyword>
       <line>1</line>
       <true>true</true>
     </token>
     <token>
       <numbers>3</numbers>
-      <value>(</value>
-      <keyword>delimiter</keyword>
+      <value>=</value>
+      <keyword>unary operator</keyword>
       <line>1</line>
       <true>true</true>
     </token>
     <token>
       <numbers>4</numbers>
-      <value>int</value>
-      <keyword>keyword</keyword>
+      <value>0xA1Eull</value>
+      <keyword>integer constant</keyword>
       <line>1</line>
       <true>true</true>
     </token>
     <token>
       <numbers>5</numbers>
-      <value>a</value>
-      <keyword>identifier</keyword>
+      <value>;</value>
+      <keyword>delimiter</keyword>
       <line>1</line>
       <true>true</true>
     </token>
     <token>
       <numbers>6</numbers>
-      <value>,</value>
-      <keyword>delimiter</keyword>
-      <line>1</line>
+      <value>float</value>
+      <keyword>keyword</keyword>
+      <line>2</line>
       <true>true</true>
     </token>
     <token>
       <numbers>7</numbers>
-      <value>int</value>
-      <keyword>keyword</keyword>
-      <line>1</line>
+      <value>b</value>
+      <keyword>identifier</keyword>
+      <line>2</line>
       <true>true</true>
     </token>
     <token>
       <numbers>8</numbers>
-      <value>b</value>
-      <keyword>identifier</keyword>
-      <line>1</line>
+      <value>=</value>
+      <keyword>unary operator</keyword>
+      <line>2</line>
       <true>true</true>
     </token>
     <token>
       <numbers>9</numbers>
-      <value>)</value>
-      <keyword>delimiter</keyword>
-      <line>1</line>
+      <value>1.5e-4F</value>
+      <keyword>floating constant</keyword>
+      <line>2</line>
       <true>true</true>
     </token>
     <token>
       <numbers>10</numbers>
-      <value>{</value>
+      <value>;</value>
       <keyword>delimiter</keyword>
       <line>2</line>
       <true>true</true>
     </token>
     <token>
       <numbers>11</numbers>
-      <value>return</value>
+      <value>char</value>
       <keyword>keyword</keyword>
       <line>3</line>
       <true>true</true>
     </token>
     <token>
       <numbers>12</numbers>
-      <value>a</value>
-      <keyword>identifier</keyword>
-      <line>3</line>
-      <true>true</true>
-    </token>
-    <token>
-      <numbers>13</numbers>
-      <value>+</value>
+      <value>*</value>
       <keyword>unary operator</keyword>
       <line>3</line>
       <true>true</true>
     </token>
     <token>
-      <numbers>14</numbers>
-      <value>b</value>
+      <numbers>13</numbers>
+      <value>s</value>
       <keyword>identifier</keyword>
       <line>3</line>
       <true>true</true>
     </token>
     <token>
+      <numbers>14</numbers>
+      <value>=</value>
+      <keyword>unary operator</keyword>
+      <line>3</line>
+      <true>true</true>
+    </token>
+    <token>
       <numbers>15</numbers>
+      <value>&quot;一个很长的字符串&quot;</value>
+      <keyword>string</keyword>
+      <line>3</line>
+      <true>true</true>
+    </token>
+    <token>
+      <numbers>16</numbers>
       <value>;</value>
       <keyword>delimiter</keyword>
       <line>3</line>
       <true>true</true>
     </token>
     <token>
-      <numbers>16</numbers>
-      <value>&amp;</value>
-      <keyword>unary operator</keyword>
-      <line>4</line>
-      <true>true</true>
-    </token>
-    <token>
       <numbers>17</numbers>
-      <value>&gt;</value>
-      <keyword>unary operator</keyword>
+      <value>a</value>
+      <keyword>identifier</keyword>
       <line>4</line>
       <true>true</true>
     </token>
     <token>
       <numbers>18</numbers>
-      <value>&lt;</value>
-      <keyword>unary operator</keyword>
+      <value>+=</value>
+      <keyword>multicast operator</keyword>
       <line>4</line>
       <true>true</true>
     </token>
     <token>
       <numbers>19</numbers>
-      <value>}</value>
-      <keyword>delimiter</keyword>
-      <line>5</line>
+      <value>2</value>
+      <keyword>integer constant</keyword>
+      <line>4</line>
       <true>true</true>
     </token>
     <token>
       <numbers>20</numbers>
+      <value>;</value>
+      <keyword>delimiter</keyword>
+      <line>4</line>
+      <true>true</true>
+    </token>
+    <token>
+      <numbers>21</numbers>
       <value>@</value>
       <keyword>end of file</keyword>
       <line>5</line>
