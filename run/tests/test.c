@@ -1,1 +1,5 @@
-0x12;
+int main(int a, int b)
+{
+  a = a & b;
+  return a + b;
+}

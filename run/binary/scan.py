@@ -1,7 +1,10 @@
 #! /usr/local/bin/python3
 
+import os
 import sys
 import string
+import xml.etree.cElementTree as ElementTree
+from xml.dom import minidom
 
 # 关键词
 cKeywords = ['auto', 'break', 'case', 'char', 'const',
@@ -440,6 +443,7 @@ def scanner(code):
     codeLine = codeLine + 1
   # End of file
   elif character == '@':
+    codeValue = codeValue + character
     codeType = 'END OF FILE'
 
 
@@ -458,15 +462,54 @@ def main():
   code = preProcess(content)
   print(code)
 
+  # C source file name
+  fileName = os.path.basename(filePath)
+  # XML output file name
+  xmlFileName = os.path.splitext(fileName)[0] + '.token.xml'
+
+  # Create XML tree
+  xmlTree = ElementTree.Element('project', {
+      'name': fileName
+  })
+  xmlTokens = ElementTree.SubElement(xmlTree, 'tokens')
+
   # Start scanning!
   global codeNum
   while index <= len(code) - 1:
     scanner(code)
     # Print identified word type and word itself
     if codeType != '':
-      print('Num', '{:>2}'.format(codeNum), 'Line', '{:>2}'.format(codeLine),
-            '{:>18}'.format(codeType.upper()) + ': ' + '{:<5}'.format(codeValue), index)
+      xmlToken = ElementTree.SubElement(xmlTokens, 'token')
+
+      xmlNumber = ElementTree.SubElement(xmlToken, 'numbers')
+      xmlValue = ElementTree.SubElement(xmlToken, 'value')
+      xmlType = ElementTree.SubElement(xmlToken, 'keyword')
+      xmlLine = ElementTree.SubElement(xmlToken, 'line')
+      xmlValid = ElementTree.SubElement(xmlToken, 'true')
+
+      xmlNumber.text = str(codeNum)
+      xmlValue.text = str(codeValue)
+      xmlType.text = codeType.lower()
+      xmlLine.text = str(codeLine)
+      if not 'illegal' in codeType.lower():
+        xmlValid.text = 'true'
+      else:
+        xmlValid.text = 'false'
+
+      ## Test output, debugging purposes
+      # print('Num', '{:>2}'.format(codeNum), 'Line', '{:>2}'.format(codeLine),
+      #       '{:>18}'.format(codeType.upper()) + ': ' + '{:<5}'.format(codeValue), index)
+
       codeNum = codeNum + 1
+
+  # Turn XML tree to string
+  xmlString = ElementTree.tostring(xmlTree)
+  # Set XML indent and encoding (This returns a byte for the file to read)
+  xml = minidom.parseString(xmlString).toprettyxml(indent='  ', encoding='utf-8')
+  # Write XML to file
+  with open(xmlFileName, 'wb') as f:
+    f.write(xml)
+  print('Written XML token processing results to file:', xmlFileName)
 
 
 if __name__ == "__main__":
