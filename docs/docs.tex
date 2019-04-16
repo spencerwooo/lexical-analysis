@@ -3,14 +3,18 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{multirow}
+\usepackage{verbatim}
 \usepackage{subcaption}
 \usepackage{tabu}
+\usepackage{booktabs}
 \usepackage{minted}
 \usemintedstyle{manni}
 \usepackage[table]{xcolor}
 
 \setlength{\parskip}{1em}
 \definecolor{lightergray}{gray}{0.95}
+\setlength{\tabcolsep}{12pt}
+\renewcommand{\arraystretch}{1}
 
 \begin{document}
 \begin{titlepage}
@@ -52,7 +56,7 @@
 \subsection{程序实现的大致思路}
 为了和接下来语法分析模块相配合，本次实现的词法分析器接受 C 语言源程序作为输入，利用 XML 作为格式进行输出分析的词法内容。同时，为了和 BIT-MiniCC 进行更好的整合，本次实验我决定使用 Python 作为主语言进行各个模块的实现。
 
-经过分析，我觉得本次实验中词法分析器是如下的大致构造：
+经过分析，我觉得本次实验中词法分析器是如下图 \ref{fig:figure1} 的大致构造：
 
 \begin{figure}[h]
   \includegraphics[width=\linewidth]{images/lexical.png}
@@ -197,13 +201,13 @@ while index <= len(code) - 1:
   digit \rightarrow 0 ... 9
 \end{equation}
 
-为了识别标识符，我确定如图 2 的状态机。
+为了识别标识符，我确定如图 \ref{fig:figure2} 的状态机。
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.45\textwidth]{images/identifier.png}
   \caption{识别标识符的状态机}
-  \label{fig:2}
+  \label{fig:figure2}
 \end{figure}
 
 之后，我们就可以实现对标识符的识别：
@@ -320,13 +324,56 @@ for keyword in cKeywords:
 
 其中我们需要特别注意的是：
 \begin{itemize}
-  \item 整数常量中有十进制 Decimal、八进制 Octal 和十六进制 Hexadecimal 三种常量需要考虑，其中以 0 开头的是八进制数字，以 0x 或 0X 开头的是十六进制数字，其他我们都直接认为是十进制数字
-  \item 浮点型常量中需要考虑科学计数法，比如 1.5e-4 就是一个合法的浮点型常量
-  \item 整数常量中的后缀字符有 u、U 表示无符号整形 unsigned 和 l、L 表示长整型 long 或 long long，也就是说比如 512ull 这样的无符号长整型就是合法的十进制整型常量
-  \item 浮点型常量中后缀字符有 f、F、l、L，其中 f、F 表示 float 类型的浮点型常量，没有 f、F 后缀的浮点型常量我们认为是 double 类型的；l、L 表示长浮点型常量，即比如 1.5F、4.9L 这样的浮点数是合法的
+  \item 整数常量中有十进制 Decimal、八进制 Octal 和十六进制 Hexadecimal 三种常量需要考虑，其中以 \texttt{0} 开头的是八进制数字，以 \texttt{0x} 或 \texttt{0X} 开头的是十六进制数字，其他我们都直接认为是十进制数字
+  \item 浮点型常量中需要考虑科学计数法，比如 \texttt{1.5e-4} 就是一个合法的浮点型常量
+  \item 整数常量中的后缀字符有 u、U 表示无符号整形 unsigned 和 l、L 表示长整型 long 或 long long，也就是说比如 \texttt{512ull} 这样的无符号长整型就是合法的十进制整型常量
+  \item 浮点型常量中后缀字符有 f、F、l、L，其中 f、F 表示 float 类型的浮点型常量，没有 f、F 后缀的浮点型常量我们认为是 double 类型的；l、L 表示长浮点型常量，即比如 \texttt{1.5F}、\texttt{4.9L} 这样的浮点数是合法的
 \end{itemize}
 
-综合整形常量和浮点型常量的文法表示和注意，我们可以构造如下的自动机来识别整形和浮点型常量。
+综合整形常量和浮点型常量的文法表示和注意事项，我们可以构造如下图 \ref{fig:figure3} 的自动机来识别整形和浮点型常量：
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{images/constant.png}
+  \caption{整形和浮点型常量识别自动机}
+  \label{fig:figure3}
+\end{figure}
+
+之后，我们就可以按照状态机的进行代码实现了。
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# Integer and float constants
+elif character.isdigit():
+  global constantState
+  while character.isdigit() or character in '-.xXeEaAbBcCdDfFuUlL':
+    codeValue = codeValue + character
+    # 进入自动机，进行串匹配
+    if constantState == 0:
+      if character == '0':
+        constantState = 1
+    ...
+    elif constantState == 13 or constantState == 15:
+      if character:
+        constantState = -1
+    character = code[index]
+    index = index + 1
+
+  index = index - 1
+  # 接受整形常量
+  if constantState in (1, 2, 4, 9, 10, 11, 12, 13, 14):
+    codeType = 'integer constant'
+    constantState = 0
+  # 接受浮点型常量
+  elif constantState == 6 or constantState == 15:
+    codeType = 'floating constant'
+    constantState = 0
+  # 被拒绝或未识别的常量
+  else:
+    codeType = 'illegal constant'
+    constantState = 0
+\end{minted}
+
+这样，我们就基本实现了对整形和浮点型常量的识别。
 
 \subsubsection{字符 Character、字符串 String 的判断}
 字符和字符串我们需要分别进行判断。我在这一步骤的判断是基于界限符单引号\ ' 和双引号\ " 来判断 Token 属于字符还是字符串。
@@ -359,8 +406,191 @@ for keyword in cKeywords:
   esc-seq \rightarrow\ \setminus'\ |\ \setminus"\ |\ \setminus?\ |\ \setminus\setminus\ |\ \setminus a\ |\ \setminus b\ |\ \setminus f\ |\ \setminus n\ |\ \setminus r\ |\ \setminus t\ |\ \setminus v
 \end{equation}
 
+根据上面的文法描述，我们可以画出识别字符和字符串的自动机如下图 \ref{fig:figure4} 所示：
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{images/string.png}
+  \caption{识别字符 Character 和字符串 String Literal 的自动机}
+  \label{fig:figure4}
+\end{figure}
+
+可以看到，我们在识别字符和字符串的时候，需要特别识别转义字符，因此我们首先构造一个转义字符列表：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# 转义字符
+cEscSequence = ['\'', '"', '?', '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v']
+\end{minted}
+
+之后，我们就可以根据上面自动机构建识别字符和字符串的代码。
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# String!
+elif character == '"':
+  global stringState
+  while index < len(code):
+    codeValue = codeValue + character
+    if stringState == 0:
+      if character == '"':
+        stringState = 1
+    elif stringState == 1:
+      if character == '\\':
+        stringState = 3
+      elif character == '"':
+        stringState = 2
+        break
+    elif stringState == 2:
+      break
+    elif stringState == 3:
+      if character in cEscSequence:
+        stringState = 1
+    character = code[index]
+    index = index + 1
+  if stringState == 2:
+    codeType = 'string'
+    stringState = 0
+  else:
+    print('Illegal string.')
+    stringState = 0
+
+# Char!
+elif character == '\'':
+  global charState
+  while index < len(code):
+    codeValue = codeValue + character
+    if charState == 0:
+      ...
+    character = code[index]
+    index = index + 1
+  if charState == 2:
+    codeType = 'character'
+    charState = 0
+  else:
+    codeType = 'illegal char'
+    charState = 0
+\end{minted}
+
 \subsubsection{算符（包括运算符 Operator 和界限符 Delimiter）的判断}
 在 C 语言中，能够被识别的算符有：
+
+\begin{center}
+  ! " \# \$ \% \& ' ( ) * + , - . / : ; < = > ? @ [ \textbackslash\ ] \textasciicircum\ \textunderscore \ ` \{ | \} \textasciitilde
+\end{center}
+
+这些算符通过组合可以成为单目或多目运算符，一些单独的算符也属于界限符。通过查阅资料，我找到了 C 语言定义了以下界限符：
+
+\begin{center}
+  \captionsetup{position=above}
+  \captionof{table}{C 语言定义的界限符 Delimiter}
+  \begin{tabular}{|c c c c c c c c c c c|}
+    \hline
+    [ & ] & ( & ) & \{ & \} & ' & " & , & ; & \textbackslash \\
+    \hline
+  \end{tabular}
+\end{center}
+
+C 语言中合法的运算符有这些：
+
+\begin{center}
+  \captionsetup{position=above}
+  \captionof{table}{C 语言定义的运算符 Operator}
+  \begin{tabular}{|c c c c c c c c c c|}
+    \hline
+    . & -> & ++ & -- & \& & * & + & - & \textasciitilde & ! \\
+    / & \% & << & >> & < & > & <= & >= & == & != \\
+    \textasciicircum & | & \&\& & || & ? & : & ... & = & *= & /= \\
+    \%=  & += & -= & <<= & >>= & \&= & \textasciicircum = & |= & \# & \#\# \\
+   <: & :> & <\% & \%> & \%: & & & & & \\
+    \hline
+  \end{tabular}
+\end{center}
+
+因此，我们可以根据算符能否作为单目运算符来将其如下区分：
+
+\begin{center}
+  \captionsetup{position=above}
+  \captionof{table}{能构成多目运算符的算符分类}
+  \label{tb:table4}
+  \begin{tabular}{ c | c c c c c }
+    \hline
+    \textbf{运算符首字符} & \multicolumn{5}{c}{\textbf{对应的多目运算符}} \\
+    \hline
+    + & ++ & += & & & \\
+    - & -= & -= & & & \\
+    < & << & <= & <<= & <: & <\% \\
+    > & >> & >= & >>= \\
+    = & == \\
+    ! & != \\
+    \& & \&\& & \& = \\
+    | & || & |= \\
+    * & *= \\
+    / & /= \\
+    \% & \%= & \%> & \%: \\
+    \textasciicircum & \textasciicircum= \\
+    : & :> \\
+    \# & \#\# \\
+    \hline
+  \end{tabular}
+\end{center}
+
+那么剩下的算符就是无法直接构成多目运算符的算符了。
+
+具体实现中，我们首先定义运算符列表、可作为多目运算符的算符列表和界限符列表这三个列表：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# 运算符
+cOperator = ['+', '-', '&', '*', '~', '!', '/',
+             '^', '%', '=', '.', ':', '?', '#', '<', '>', '|', '`']
+# 可作为二元运算符首字符的算符
+cBinaryOp = ['+', '-', '>', '<', '=', '!',
+             '&', '|', '*', '/', '%', '^', '#', ':', '.']
+# 界限符
+cDelimiter = ['[', ']', '(', ')', '{', '}', '\'', '"', ',', ';', '\\']
+\end{minted}
+
+对于界限符，由于在词法分析这一步骤我们尚不需要对括号匹配等内容进行识别，因此我们只需要匹配输入 Token 是否为 界限符即可。具体实现如下：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+  # Delimiters
+  elif character in cDelimiter:
+    codeValue = codeValue + character
+    codeType = 'delimiter'
+\end{minted}
+
+对于操作符，由于我们需要考虑单目和多目运算符进行匹配工作，因此这里我们根据上面表 \ref{tb:table4} 进行实际的代码实现，构造自动机进行 Token 识别。这里涉及到的自动机非常复杂，也远远超过了我们本次实验报告的内容，这里我就不具体进行介绍了。下面是大致的代码实现：
+
+\begin{minted}[linenos,frame=lines,framesep=2mm]{python}
+# Operators
+elif character in cOperator:
+  global operatorState
+  while character in cOperator:
+    codeValue = codeValue + character
+    if operatorState == 0:
+      if not character in cBinaryOp:
+        operatorState = 20
+        break
+      else:
+        ...
+
+    character = code[index]
+    index = index + 1
+  if operatorState >= 2 and operatorState <= 18:
+    index = index - 1
+    codeType = 'Unary operator'
+    operatorState = 0
+  elif operatorState == 20:
+    codeType = 'Unary operator'
+    operatorState = 0
+  elif operatorState == 1:
+    codeType = 'Multicast operator'
+    operatorState = 0
+  else:
+    index = index - 1
+    codeType = 'Illegal operator'
+    operatorState = 0
+\end{minted}
+
+我们到这里基本实现了所有 Token 类型的识别。
 
 \section{实验结果}
 

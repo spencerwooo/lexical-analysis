@@ -1,1 +1,1 @@
-char a = 'ajfdjaslkfj
+0x12;

@@ -247,7 +247,7 @@ def scanner(code):
       character = code[index]
       index = index + 1
     index = index - 1
-    if constantState in (1, 2, 4, 9, 10, 11, 12, 13):
+    if constantState in (1, 2, 4, 9, 10, 11, 12, 13, 14):
       codeType = 'integer constant'
       constantState = 0
     elif constantState == 6 or constantState == 15:
