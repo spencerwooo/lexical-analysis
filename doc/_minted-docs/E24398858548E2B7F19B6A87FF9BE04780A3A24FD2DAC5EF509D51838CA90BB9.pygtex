@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Start scanning!}
+\PYG{k}{global} \PYG{n}{codeNum}
+\PYG{k}{while} \PYG{n}{index} \PYG{o}{\PYGZlt{}=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{code}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{:}
+  \PYG{n}{scanner}\PYG{p}{(}\PYG{n}{code}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} 主函数内的内容}
+\PYG{c+c1}{\PYGZsh{} Pre process C source file}
+\PYG{n}{code} \PYG{o}{=} \PYG{n}{preProcess}\PYG{p}{(}\PYG{n}{content}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} 预处理函数}
+\PYG{k}{def} \PYG{n+nf}{preProcess}\PYG{p}{(}\PYG{n}{content}\PYG{p}{):}
+  \PYG{n}{code} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+  \PYG{c+c1}{\PYGZsh{} Trim leading white space 去掉每行最前面的空白}
+  \PYG{k}{for} \PYG{n}{line} \PYG{o+ow}{in} \PYG{n}{content}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{line} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+      \PYG{n}{code} \PYG{o}{=} \PYG{n}{code} \PYG{o}{+} \PYG{n}{line}\PYG{o}{.}\PYG{n}{lstrip}\PYG{p}{()}
+    \PYG{k}{else}\PYG{p}{:}
+      \PYG{n}{code} \PYG{o}{=} \PYG{n}{code} \PYG{o}{+} \PYG{n}{line}
+  \PYG{k}{return} \PYG{n}{code}
+\end{Verbatim}

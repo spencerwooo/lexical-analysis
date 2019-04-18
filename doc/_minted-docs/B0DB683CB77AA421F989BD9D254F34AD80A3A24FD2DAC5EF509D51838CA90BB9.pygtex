@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{while} \PYG{n}{index} \PYG{o}{\PYGZlt{}=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{code}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{:}
+  \PYG{o}{...}
+  \PYG{k}{if} \PYG{n}{codeType} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{:}
+    \PYG{n}{xmlToken} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlTokens}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}token\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{n}{xmlNumber} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlToken}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}numbers\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{xmlValue} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlToken}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}value\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{xmlType} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlToken}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}keyword\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{xmlLine} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlToken}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}line\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{xmlValid} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{SubElement}\PYG{p}{(}\PYG{n}{xmlToken}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}true\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{n}{xmlNumber}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{codeNum}\PYG{p}{)}
+    \PYG{n}{xmlValue}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{codeValue}\PYG{p}{)}
+    \PYG{n}{xmlType}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n}{codeType}\PYG{o}{.}\PYG{n}{lower}\PYG{p}{()}
+    \PYG{n}{xmlLine}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{codeLine}\PYG{p}{)}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{l+s+s1}{\PYGZsq{}illegal\PYGZsq{}} \PYG{o+ow}{in} \PYG{n}{codeType}\PYG{o}{.}\PYG{n}{lower}\PYG{p}{():}
+      \PYG{n}{xmlValid}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}true\PYGZsq{}}
+    \PYG{k}{else}\PYG{p}{:}
+      \PYG{n}{xmlValid}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}false\PYGZsq{}}
+\end{Verbatim}

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Turn XML tree to string}
+\PYG{n}{xmlString} \PYG{o}{=} \PYG{n}{ElementTree}\PYG{o}{.}\PYG{n}{tostring}\PYG{p}{(}\PYG{n}{xmlTree}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Set XML indent and encoding (This returns a byte for the file to read)}
+\PYG{n}{xml} \PYG{o}{=} \PYG{n}{minidom}\PYG{o}{.}\PYG{n}{parseString}\PYG{p}{(}\PYG{n}{xmlString}\PYG{p}{)}\PYG{o}{.}\PYG{n}{toprettyxml}\PYG{p}{(}\PYG{n}{indent}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}  \PYGZsq{}}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Write XML to file}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{xmlFileName}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}wb\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{f}\PYG{p}{:}
+  \PYG{n}{f}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{n}{xml}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Written XML token processing results to file:\PYGZsq{}}\PYG{p}{,} \PYG{n}{xmlFileName}\PYG{p}{)}
+\end{Verbatim}

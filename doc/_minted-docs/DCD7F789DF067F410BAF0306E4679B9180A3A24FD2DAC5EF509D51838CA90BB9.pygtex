@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Integer and float constants}
+\PYG{k}{elif} \PYG{n}{character}\PYG{o}{.}\PYG{n}{isdigit}\PYG{p}{():}
+  \PYG{k}{global} \PYG{n}{constantState}
+  \PYG{k}{while} \PYG{n}{character}\PYG{o}{.}\PYG{n}{isdigit}\PYG{p}{()} \PYG{o+ow}{or} \PYG{n}{character} \PYG{o+ow}{in} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}.xXeEaAbBcCdDfFuUlL\PYGZsq{}}\PYG{p}{:}
+    \PYG{n}{codeValue} \PYG{o}{=} \PYG{n}{codeValue} \PYG{o}{+} \PYG{n}{character}
+    \PYG{c+c1}{\PYGZsh{} 进入自动机，进行串匹配}
+    \PYG{k}{if} \PYG{n}{constantState} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{constantState} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{o}{...}
+    \PYG{k}{elif} \PYG{n}{constantState} \PYG{o}{==} \PYG{l+m+mi}{13} \PYG{o+ow}{or} \PYG{n}{constantState} \PYG{o}{==} \PYG{l+m+mi}{15}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character}\PYG{p}{:}
+        \PYG{n}{constantState} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+    \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+  \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}
+  \PYG{c+c1}{\PYGZsh{} 接受整形常量}
+  \PYG{k}{if} \PYG{n}{constantState} \PYG{o+ow}{in} \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{,} \PYG{l+m+mi}{14}\PYG{p}{):}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}integer constant\PYGZsq{}}
+    \PYG{n}{constantState} \PYG{o}{=} \PYG{l+m+mi}{0}
+  \PYG{c+c1}{\PYGZsh{} 接受浮点型常量}
+  \PYG{k}{elif} \PYG{n}{constantState} \PYG{o}{==} \PYG{l+m+mi}{6} \PYG{o+ow}{or} \PYG{n}{constantState} \PYG{o}{==} \PYG{l+m+mi}{15}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}floating constant\PYGZsq{}}
+    \PYG{n}{constantState} \PYG{o}{=} \PYG{l+m+mi}{0}
+  \PYG{c+c1}{\PYGZsh{} 被拒绝或未识别的常量}
+  \PYG{k}{else}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}illegal constant\PYGZsq{}}
+    \PYG{n}{constantState} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

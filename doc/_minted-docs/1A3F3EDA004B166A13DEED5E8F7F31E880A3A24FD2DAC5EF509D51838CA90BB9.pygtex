@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{scanner}\PYG{p}{(}\PYG{n}{code}\PYG{p}{):}
+  \PYG{c+c1}{\PYGZsh{} 当前扫描代码位置}
+  \PYG{k}{global} \PYG{n}{index}
+  \PYG{c+c1}{\PYGZsh{} 当前识别符数}
+  \PYG{k}{global} \PYG{n}{codeNum}
+  \PYG{c+c1}{\PYGZsh{} 当前代码行}
+  \PYG{k}{global} \PYG{n}{codeLine}
+
+  \PYG{c+c1}{\PYGZsh{} 识别到词语的类别}
+  \PYG{k}{global} \PYG{n}{codeType}
+  \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+  \PYG{c+c1}{\PYGZsh{} 识别到的词语}
+  \PYG{k}{global} \PYG{n}{codeValue}
+  \PYG{n}{codeValue} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+  \PYG{c+c1}{\PYGZsh{} 当前识别字符}
+  \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+  \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+  \PYG{c+c1}{\PYGZsh{} Ignore white space}
+  \PYG{k}{while} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{:}
+    \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+  \PYG{o}{...}
+\end{Verbatim}

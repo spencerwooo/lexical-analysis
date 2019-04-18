@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Identifier!}
+\PYG{k}{if} \PYG{n}{character}\PYG{o}{.}\PYG{n}{isalpha}\PYG{p}{()} \PYG{o+ow}{or} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{:}
+  \PYG{k}{while} \PYG{n}{character}\PYG{o}{.}\PYG{n}{isalpha}\PYG{p}{()} \PYG{o+ow}{or} \PYG{n}{character}\PYG{o}{.}\PYG{n}{isdigit}\PYG{p}{()} \PYG{o+ow}{or} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{:}
+    \PYG{n}{codeValue} \PYG{o}{=} \PYG{n}{codeValue} \PYG{o}{+} \PYG{n}{character}
+    \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+  \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}identifier\PYGZsq{}}
+  \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}
+\end{Verbatim}

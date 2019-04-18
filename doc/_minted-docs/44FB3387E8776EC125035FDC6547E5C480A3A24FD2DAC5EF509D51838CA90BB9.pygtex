@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} C source file name}
+\PYG{n}{fileName} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{basename}\PYG{p}{(}\PYG{n}{filePath}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} XML output file name}
+\PYG{n}{xmlFileName} \PYG{o}{=} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{splitext}\PYG{p}{(}\PYG{n}{fileName}\PYG{p}{)[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}.token.xml\PYGZsq{}}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int} \PYG{n}{a} \PYG{o}{=} \PYG{l+m+mh}{0xA1Eull}\PYG{p}{;}
+\PYG{k+kt}{float} \PYG{n}{b} \PYG{o}{=} \PYG{l+m+mf}{1.5e\PYGZhy{}4}\PYG{n}{F}\PYG{p}{;}
+\PYG{k+kt}{char} \PYG{o}{*}\PYG{n}{s} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}一个很长的字符串\PYGZdq{}}\PYG{p}{;}
+\PYG{n}{a} \PYG{o}{+=} \PYG{l+m+mi}{2}\PYG{p}{;}
+\end{Verbatim}

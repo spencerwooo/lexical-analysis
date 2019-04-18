@@ -1,0 +1,58 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} String!}
+\PYG{k}{elif} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}}\PYG{p}{:}
+  \PYG{k}{global} \PYG{n}{stringState}
+  \PYG{k}{while} \PYG{n}{index} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{code}\PYG{p}{):}
+    \PYG{n}{codeValue} \PYG{o}{=} \PYG{n}{codeValue} \PYG{o}{+} \PYG{n}{character}
+    \PYG{k}{if} \PYG{n}{stringState} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{elif} \PYG{n}{stringState} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{3}
+      \PYG{k}{elif} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZdq{}\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{2}
+        \PYG{k}{break}
+    \PYG{k}{elif} \PYG{n}{stringState} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{:}
+      \PYG{k}{break}
+    \PYG{k}{elif} \PYG{n}{stringState} \PYG{o}{==} \PYG{l+m+mi}{3}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o+ow}{in} \PYG{n}{cEscSequence}\PYG{p}{:}
+        \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+  \PYG{k}{if} \PYG{n}{stringState} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}string\PYGZsq{}}
+    \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{0}
+  \PYG{k}{else}\PYG{p}{:}
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Illegal string.\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{stringState} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} Char!}
+\PYG{k}{elif} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+  \PYG{k}{global} \PYG{n}{charState}
+  \PYG{k}{while} \PYG{n}{index} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{code}\PYG{p}{):}
+    \PYG{n}{codeValue} \PYG{o}{=} \PYG{n}{codeValue} \PYG{o}{+} \PYG{n}{character}
+    \PYG{k}{if} \PYG{n}{charState} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{elif} \PYG{n}{charState} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{2}
+        \PYG{k}{break}
+      \PYG{k}{elif} \PYG{n}{character} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+        \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{3}
+    \PYG{k}{elif} \PYG{n}{charState} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{:}
+      \PYG{k}{break}
+    \PYG{k}{elif} \PYG{n}{charState} \PYG{o}{==} \PYG{l+m+mi}{3}\PYG{p}{:}
+      \PYG{k}{if} \PYG{n}{character} \PYG{o+ow}{in} \PYG{n}{cEscSequence}\PYG{p}{:}
+        \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{n}{character} \PYG{o}{=} \PYG{n}{code}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n}{index} \PYG{o}{+} \PYG{l+m+mi}{1}
+  \PYG{k}{if} \PYG{n}{charState} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}character\PYGZsq{}}
+    \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{0}
+  \PYG{k}{else}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}illegal char\PYGZsq{}}
+    \PYG{n}{charState} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

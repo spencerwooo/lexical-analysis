@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} 指针查找位置}
+\PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} Token 属性}
+\PYG{n}{codeNum} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+\PYG{n}{codeLine} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{n}{codeValue} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+\PYG{n}{codeValid} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

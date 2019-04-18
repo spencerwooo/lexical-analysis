@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Keyword!}
+\PYG{k}{for} \PYG{n}{keyword} \PYG{o+ow}{in} \PYG{n}{cKeywords}\PYG{p}{:}
+  \PYG{k}{if} \PYG{n}{codeValue} \PYG{o}{==} \PYG{n}{keyword}\PYG{p}{:}
+    \PYG{n}{codeType} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}keyword\PYGZsq{}}
+    \PYG{k}{break}
+\end{Verbatim}
